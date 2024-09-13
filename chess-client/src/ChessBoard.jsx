@@ -55,19 +55,24 @@ function ChessBoard() {
     return true; // move made successfully
   };
 
+  const toggleOrientation = () => {
+    setOrientation(orientation === "white" ? "black" : "white");
+  };
+
   return (
     <div>
-      {/* Chessboard component based on the FEN string */}
+        {/* Chessboard component based on the FEN string */}
+      <button onClick={toggleOrientation}>Toggle Board Orientation</button>
       <Chessboard
         position={fen}
-        onDrop={({ sourceSquare, targetSquare }) =>
-          handleMove(sourceSquare, targetSquare)
-        }
+        onDrop={({ sourceSquare, targetSquare }) => handleMove(sourceSquare, targetSquare)}
         orientation={orientation}
         draggable={true}
       />
-      <p>White Time: {whiteTime}s</p>
-      <p>Black Time: {blackTime}s</p>
+      <div>
+        <p>White Time: {whiteTime}s - {currentTurn === "white" ? "Your Turn" : ""}</p>
+        <p>Black Time: {blackTime}s - {currentTurn === "black" ? "Your Turn" : ""}</p>
+      </div>
     </div>
   );
 }
