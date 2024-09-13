@@ -9,14 +9,33 @@ const chess = new Chess(); // initialize a new chess game
 function ChessBoard() {
   const [fen, setFen] = useState(chess.fen()); // state to store the FEN string
   const [orientation, setOrientation] = useState("white"); // board orientation
+  const [whiteTime, setWhiteTime] = useState(300); // 5 minutes in seconds
+  const [blackTime, setBlackTime] = useState(300);
+  const [currentTurn, setCurrentTurn] = useState("white");
 
   useEffect(() => {
+    const timer = setInterval(() => {
+      if (chess.game_over()) {
+        clearInterval(timer);
+      } else {
+        if (chess.turn() === "w") {
+          setWhiteTime((time) => (time > 0 ? time - 1 : 0));
+        } else {
+          setBlackTime((time) => (time > 0 ? time - 1 : 0));
+        }
+      }
+    }, 1000);
+
     socket.on("move", (moveData) => {
       chess.move(moveData.move); // make the move in the chess game
       setFen(chess.fen()); // Update the FEN string
+      setCurrentTurn(chess.turn() === "w" ? "white" : "black"); // Update the current turn
     });
 
-    return () => socket.off("move");
+    return () => {
+      clearInterval(timer);
+      socket.off("move");
+    };
   }, []);
 
   const handleMove = (sourceSquare, targetSquare) => {
@@ -32,6 +51,7 @@ function ChessBoard() {
 
     setFen(chess.fen()); // Update the FEN string
     socket.emit("move", { move: move.san }); // Send the move to the opponent
+    setCurrentTurn(chess.turn() === "w" ? "white" : "black"); // Update the current turn
     return true; // move made successfully
   };
 
@@ -46,6 +66,8 @@ function ChessBoard() {
         orientation={orientation}
         draggable={true}
       />
+      <p>White Time: {whiteTime}s</p>
+      <p>Black Time: {blackTime}s</p>
     </div>
   );
 }
