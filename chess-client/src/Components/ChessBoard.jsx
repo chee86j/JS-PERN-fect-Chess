@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
-import Chess from "chess.js"; // chess.js library for chess logic based on FEN
+import { Chess } from "chess.js"; // Corrected import for chess.js
 import Chessboard from "chessboardjsx"; // chessboardjsx library for chessboard UI
 
 const socket = io("http://localhost:4000");

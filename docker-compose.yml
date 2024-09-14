@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  chess-client:
+    build: ./chess-client
+    ports:
+      - '3000:3000'
+    environment:
+      - VITE_API_URL=http://localhost:4000
+    depends_on:
+      - chess-server
+    volumes:
+      - ./chess-client:/app
+    networks:
+      - chess-network
+
+  chess-server:
+    build: ./chess-server
+    ports:
+      - '4000:4000'
+    environment:
+      - PORT=4000
+      - DATABASE_URL=postgres://chessuser:chesspass@postgres:5432/chessdb
+    depends_on:
+      - postgres
+    volumes:
+      - ./chess-server:/app
+    networks:
+      - chess-network
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: chessuser
+      POSTGRES_PASSWORD: chesspass
+      POSTGRES_DB: chessdb
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - chess-network
+
+volumes:
+  postgres-data:
+
+networks:
+  chess-network:
+    driver: bridge
