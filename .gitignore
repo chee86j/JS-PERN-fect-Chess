@@ -1,0 +1,34 @@
+# Node.js (client and server)
+node_modules/
+npm-debug.log*
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+yarn-debug.log*
+yarn-error.log*
+
+# Build output (client and server)
+build/
+dist/
+.vite/
+
+# Client-specific (Vite, etc.)
+chess-client/dist/
+chess-client/build/
+chess-client/node_modules/
+chess-client/.vite/
+
+# Server-specific (Node.js, etc.)
+chess-server/node_modules/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Docker-specific (if necessary)
+docker-compose.override.yml
+docker-compose.override.yaml

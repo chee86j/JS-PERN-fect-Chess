@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "chessboardjsx": "^2.4.7",
+    "chess.js": "^1.0.0-beta.8",
+    "socket.io-client": "^4.6.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

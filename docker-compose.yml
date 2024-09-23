@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  chess-client:
+    build: ./chess-client
+    ports:
+      - "5173:80" # Expose port 5173 for the frontend
+
+  chess-server:
+    build: ./chess-server
+    ports:
+      - "4000:4000" # Expose port 4000 for the backend
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/js_pern_fect_chess_db
+    depends_on:
+      - db # Ensure the database service starts before the server
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: js_pern_fect_chess_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

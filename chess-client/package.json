@@ -1,7 +1,22 @@
 {
+  "name": "chess-client",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "start": "vite",
+    "preview": "vite preview"
+  },
   "dependencies": {
-    "chess.js": "^1.0.0-beta.8",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "chessboardjsx": "^2.4.7",
-    "socket.io-client": "^4.8.0"
+    "chess.js": "^1.0.0-beta.8",
+    "socket.io-client": "^4.6.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.1"
   }
 }
